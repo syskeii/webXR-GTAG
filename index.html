@@ -27,8 +27,7 @@
     </script>
   </head>
   <body>
-    <!-- Fallback button in case XR Blocks auto-UI fails -->
-    <button id="vr-button" onclick="startVR()">ENTER VR CLIMBING</button>
+    <button id="vr-button">ENTER VR CLIMBING</button>
 
     <script type="module">
       import 'xrblocks/addons/simulator/SimulatorAddons.js';
@@ -95,14 +94,18 @@
         }
       }
 
-      window.startVR = async () => {
+      document.getElementById('vr-button').addEventListener('click', async () => {
         const options = new xb.Options();
         options.setAppTitle('AI Gorilla Tag Prototype');
+        
+        // Ensure the XR session starts as part of this click event
+        options.xrButton.requestSession = true; 
+        
         xb.add(new GorillaTagScript());
         await xb.init(options);
-        // Hide button after starting
+        
         document.getElementById('vr-button').style.display = 'none';
-      };
+      });
     </script>
   </body>
 </html>
